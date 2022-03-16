@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, Text } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import { PARTNERS } from '../shared/partners';
 import { Avatar, Card, ListItem } from 'react-native-elements';
 import { useState } from 'react';
@@ -25,32 +25,26 @@ function Mission() {
 const AboutScreen = () => {
     const [partners, setPartners] = useState(PARTNERS);
 
-    const renderPartner = ({ item }) => {
-        return (
-            <ListItem>
-                <Avatar
-                    rounded
-                    source={require('../assets/images/bootstrap-logo.png')}
-                />
-                <ListItem.Content>
-                    <ListItem.Title>{item.name}</ListItem.Title>
-                    <ListItem.Subtitle>{item.description}</ListItem.Subtitle>
-                </ListItem.Content>
-            </ListItem>
-        );
-    };
-
     return (
         <ScrollView>
             <Mission />
             <Card>
                 <Card.Title>Community Partners</Card.Title>
                 <Card.Divider />
-                <FlatList
-                    data={partners}
-                    renderItem={renderPartner}
-                    keyExtractor={(item) => item.id.toString()}
-                />
+                {partners.map((partner) => (
+                    <ListItem key={partner.id}>
+                        <Avatar
+                            rounded
+                            source={partner.image}
+                        />
+                        <ListItem.Content>
+                            <ListItem.Title>{partner.name}</ListItem.Title>
+                            <ListItem.Subtitle>
+                                {partner.description}
+                            </ListItem.Subtitle>
+                        </ListItem.Content>
+                    </ListItem>
+                ))}
             </Card>
         </ScrollView>
     );
